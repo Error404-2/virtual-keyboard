@@ -1,9 +1,22 @@
 .textarea {
-    border: green 1px solid;
-    border-radius: 1%;
+    outline: 1px rgb(18, 200, 106) solid;
     font-size: 20px;
     font-family: verdana, sans-serif;
     width: 100%;
+    max-width: 1280px;
     padding: 7px;
-    margin: 0;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.keyboard {
+    margin: 0 auto;
+    display: grid;
+    width: 100%;
+    max-width: 1280px;
+    padding: 5;
+    gap: 3px;
+    border: 3px rgb(17, 62, 21) solid;
+    border-radius: 3px;
+
 }
