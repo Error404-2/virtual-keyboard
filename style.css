@@ -7,6 +7,7 @@
     padding: 7px;
     margin: 0 auto;
     overflow: auto;
+    display: block;
 }
 
 .keyboard {
@@ -18,5 +19,15 @@
     gap: 3px;
     border: 3px rgb(17, 62, 21) solid;
     border-radius: 3px;
+    grid-template-columns: repeat(14, 1fr);
+}
 
+.button {
+    display: block;
+    padding: 3px;
+    font-size: 16px;
+    background: rgb(148, 222, 148);
+    margin: auto;
+    border-radius: 3%;
+    border: 1px rgb(17, 62, 21) solid;
 }
