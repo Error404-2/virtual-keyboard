@@ -1,3 +1,9 @@
+let language;
+if (!localStorage.langKeys) {
+  language = 'En';
+} else {
+  language = localStorage.langKeys;
+}
 const body = document.querySelector('body');
 const textarea = document.createElement('textarea');
 const keyboard = document.createElement('div');
@@ -10,29 +16,31 @@ keyboard.className = 'keyboard';
 textarea.after(keyboard);
 const info = document.createElement('p');
 info.className = 'info';
-info.innerHTML = 'Клавиатура создана в операционной системе Windows.'
+info.innerHTML = 'Клавиатура создана в операционной системе Windows.';
 keyboard.after(info);
-let language;
-let shiftPressed;
-if (!localStorage.langKeys) {
-  language = 'En'
-} else {
-  language = localStorage.langKeys;
-};
+let shiftPressed = false;
+
+const specialKeys = [
+  'AltLeft', 'AltRight', 'Backspace', 'CapsLock',
+  'ControlLeft', 'ControlRight', 'Delete', 'Enter',
+  'ShiftLeft', 'ShiftRight', 'Tab', 'MetaLeft', 'Ctrl+Alt',
+];
+
 const infoLangAct = document.createElement('p');
 infoLangAct.className = 'info';
 infoLangAct.innerHTML = `Текущий язык ввода: ${language}`;
 info.after(infoLangAct);
+
 const infoLang = document.createElement('p');
 infoLang.className = 'info';
-infoLang.innerHTML = 'Для переключения языка комбинация: левыe ctrl + alt'
+infoLang.innerHTML = 'Для переключения языка комбинация: левыe ctrl + alt';
 infoLangAct.after(infoLang);
 const keysObj = {
   AltLeft: {
     en: 'Alt', order: 56, ru: 'Alt', shiftEn: 'Alt', shiftRu: 'Alt',
   },
   AltRight: {
-    en: 'Alt', order: 58, ru: 'AltGraph', shiftEn: 'Alt', shiftRu: 'AltGraph',
+    en: 'Alt', order: 58, ru: 'Alt', shiftEn: 'Alt', shiftRu: 'Alt',
   },
   ArrowDown: {
     en: '&#5121;', order: 61, ru: '&#5121;', shiftEn: '&#5121;', shiftRu: '&#5121;',
@@ -59,7 +67,7 @@ const keysObj = {
     en: '[', order: 25, ru: 'х', shiftEn: '{', shiftRu: 'Х',
   },
   BracketRight: {
-    en: ']', order: 26, ru: 'ъ', shiftEn: '},,', shiftRu: 'Ъ',
+    en: ']', order: 26, ru: 'ъ', shiftEn: '}', shiftRu: 'Ъ',
   },
   CapsLock: {
     en: 'CapsLock', order: 30, ru: 'CapsLock', shiftEn: 'CapsLock', shiftRu: 'CapsLock',
@@ -212,7 +220,7 @@ const keysObj = {
     en: '/', order: 52, ru: '.', shiftEn: '?', shiftRu: ',',
   },
   Space: {
-    en: '', order: 57, ru: ' ', shiftEn: ' ', shiftRu: ' ',
+    en: ' ', order: 57, ru: ' ', shiftEn: ' ', shiftRu: ' ',
   },
   Tab: {
     en: 'Tab', order: 14, ru: 'Tab', shiftEn: 'Tab', shiftRu: 'Tab',
@@ -222,8 +230,21 @@ const keysObj = {
   },
 };
 
+function changeLanguage() {
+  if (language === 'En') {
+    language = 'Ru';
+    localStorage.langKeys = 'Ru';
+    infoLangAct.innerHTML = `Текущий язык ввода: ${language}`;
+  } else {
+    language = 'En';
+    localStorage.langKeys = 'En';
+    infoLangAct.innerHTML = `Текущий язык ввода: ${language}`;
+  }
+  return language;
+}
+
 class Key {
-  constructor(keyCode, en, order, ru, shiftEn, shiftRu, language) {
+  constructor(keyCode, en, order, ru, shiftEn, shiftRu) {
     this.id = keyCode;
     this.en = en;
     this.order = order;
@@ -246,7 +267,30 @@ class Key {
     }
   }
 
-  renderInnerButton(language) {
+  defineInput() {
+    if (!(specialKeys.includes(this.id))) {
+      if ((language === 'En') && (!shiftPressed)) {
+        this.input = this.en;
+      } else if ((language === 'En') && (shiftPressed)) {
+        this.input = this.shiftEn;
+      } else if ((language === 'Ru') && (!shiftPressed)) {
+        this.input = this.ru;
+      } else if ((language === 'Ru') && (shiftPressed)) {
+        this.input = this.shiftRu;
+      }
+      return this.input;
+    } if (this.id === 'Tab') {
+      this.input = '    ';
+      return this.input;
+    } if (this.id === 'Enter') {
+      this.input = '\n';
+      return this.input;
+    }
+    this.input = '';
+    return this.input;
+  }
+
+  renderInnerButton() {
     if ((language === 'En') && (!shiftPressed)) {
       this.div.innerHTML = this.en;
     } else if ((language === 'En') && (shiftPressed)) {
@@ -256,19 +300,28 @@ class Key {
     } else if ((language === 'Ru') && (shiftPressed)) {
       this.div.innerHTML = this.shiftRu;
     }
-  };
+    const caps = document.getElementById('CapsLock');
+    if ((/[a-zA-Z]{1}/.test(this.div.innerHTML)) && (!(specialKeys.includes(this.id))) && (caps.classList.value.includes('active'))) {
+      this.div.innerHTML = this.div.innerHTML.toUpperCase();
+    }
+  }
 
-  keydown(language) {
+  keydown() {
     const keyPressed = document.getElementById(this.id);
-    keyPressed.classList.add("active");
-    textarea.innerHTML += keyPressed.innerHTML;
+    if (this.id === 'CapsLock') {
+      keyPressed.classList.toggle('active');
+    } else {
+      keyPressed.classList.add('active');
+    }
+    textarea.innerHTML += this.defineInput();
   }
 
   keyup() {
     const keyUnpressed = document.getElementById(this.id);
-    keyUnpressed.classList.remove("active");
+    if (this.id !== 'CapsLock') {
+      keyUnpressed.classList.remove('active');
+    }
   }
-
 }
 const classObj = {};
 
@@ -281,32 +334,37 @@ Object.keys(keysObj).forEach((key) => {
   }
 });
 
-addEventListener("keydown", (event) => {
-  classObj[event.code].keydown();
+addEventListener('keydown', (ev) => {
+  if ((ev.code === 'Tab') || (ev.code === 'MetaLeft') || (ev.code === 'AltLeft') || (ev.code === 'AltRight') || (ev.code === 'CapsLock')) { ev.preventDefault(); }
+  textarea.autofocus = 'true';
+  if (!ev.repeat) {
+    if ((ev.code === 'ShiftLeft') || (ev.code === 'ShiftRight')) { shiftPressed = true; }
+    classObj[ev.code].keydown();
+    Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
+  }
+  const ctrl = document.getElementById('ControlLeft');
+  if ((ctrl.classList.value.includes('active')) && (ev.code === 'AltLeft')) {
+    changeLanguage();
+  }
 });
 
-addEventListener("keyup", (event) => {
+addEventListener('keyup', (event) => {
+  if ((event.code === 'ShiftLeft') || (event.code === 'ShiftRight')) { shiftPressed = false; }
   classObj[event.code].keyup();
+  Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
 
-addEventListener("mousedown", (event) => {
+addEventListener('mousedown', (event) => {
   if (event.target.id) { classObj[event.target.id].keydown(); }
-  console.log("mousedown работает, закройте из девтулс", event.target.id);
+  Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
 
-addEventListener("mouseup", (event) => {
+addEventListener('mouseup', (event) => {
   if (event.target.id) { classObj[event.target.id].keyup(); }
-  console.log("mouseup работает, закройте из девтулс", event.target.id);
+  Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
 
-addEventListener("mouseout", (event) => {
+addEventListener('mouseout', (event) => {
   if (event.target.id) { classObj[event.target.id].keyup(); }
-  console.log("mouseout работает, закройте из девтулс", event.target.id);
+  Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
-
-// //Event properties:
-
-// shiftKey: Shift
-// altKey: Alt (or Opt for Mac)
-// ctrlKey: Ctrl
-// metaKey: Cmd for Mac
