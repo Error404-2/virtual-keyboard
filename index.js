@@ -334,7 +334,7 @@ Object.keys(keysObj).forEach((key) => {
   }
 });
 
-addEventListener('keydown', (ev) => {
+window.addEventListener('keydown', (ev) => {
   if ((ev.code === 'Tab') || (ev.code === 'MetaLeft') || (ev.code === 'AltLeft') || (ev.code === 'AltRight') || (ev.code === 'CapsLock')) { ev.preventDefault(); }
   textarea.autofocus = 'true';
   if (!ev.repeat) {
@@ -348,23 +348,23 @@ addEventListener('keydown', (ev) => {
   }
 });
 
-addEventListener('keyup', (event) => {
+window.addEventListener('keyup', (event) => {
   if ((event.code === 'ShiftLeft') || (event.code === 'ShiftRight')) { shiftPressed = false; }
   classObj[event.code].keyup();
   Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
 
-addEventListener('mousedown', (event) => {
+window.addEventListener('mousedown', (event) => {
   if (event.target.id) { classObj[event.target.id].keydown(); }
   Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
 
-addEventListener('mouseup', (event) => {
+window.addEventListener('mouseup', (event) => {
   if (event.target.id) { classObj[event.target.id].keyup(); }
   Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
 
-addEventListener('mouseout', (event) => {
+window.addEventListener('mouseout', (event) => {
   if (event.target.id) { classObj[event.target.id].keyup(); }
   Object.values(classObj).forEach((cl) => { cl.renderInnerButton(); });
 });
