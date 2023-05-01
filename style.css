@@ -1,3 +1,7 @@
+body {
+    background-color: beige;
+}
+
 .textarea {
     outline: 1px rgb(18, 200, 106) solid;
     font-size: 20px;
