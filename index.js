@@ -217,14 +217,32 @@ class Key {
     this.div.innerHTML = this.en;
     keyboard.append(this.div);
   }
+
+  keydown() {
+    const keyPressed = document.getElementById(this.id);
+    keyPressed.classList.add("active");
+  }
+
+  keyup() {
+    const keyUnpressed = document.getElementById(this.id);
+    keyUnpressed.classList.remove("active");
+  }
+
 }
-const classArr = [];
+const classObj = {};
 Object.keys(keysObj).forEach((key) => {
   if (Object.hasOwn(keysObj, key)) {
     const {
       en, order, ru, shiftEn, shiftRu,
     } = keysObj[key];
-    const k = new Key(key, en, order, ru, shiftEn, shiftRu);
-    classArr.push(k);
+    classObj[key] = new Key(key, en, order, ru, shiftEn, shiftRu);
   }
+});
+
+addEventListener("keydown", (event) => {
+  classObj[event.code].keydown();
+});
+
+addEventListener("keyup", (event) => {
+  classObj[event.code].keyup();
 });

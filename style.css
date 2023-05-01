@@ -42,6 +42,13 @@ body {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.active {
+    background: rgba(83, 252, 83, 0.945);
+    border-radius: 50px;
+    transition: all 0.2s ease;
 }
 
 #Backspace,
