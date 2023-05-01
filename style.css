@@ -1,0 +1,94 @@
+body {
+    background-color: beige;
+}
+
+.textarea {
+    outline: 1px rgb(18, 200, 106) solid;
+    font-size: 20px;
+    font-family: verdana, sans-serif;
+    width: 850px;
+    padding: 7px;
+    margin: 0 auto;
+    overflow: auto;
+    display: block;
+    box-sizing: border-box;
+}
+
+.info {
+    font-size: 20px;
+    font-family: verdana, sans-serif;
+    color: rgb(17, 62, 21);
+    margin: auto;
+    width: 850px;
+}
+
+.keyboard {
+    background-color: rgb(147, 158, 144);
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    width: 850px;
+    padding: 5px;
+    gap: 3px;
+    border: 3px rgb(17, 62, 21) solid;
+    border-radius: 3px;
+    /* grid-template-columns: repeat(14, 1fr); */
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+.button {
+    display: flex;
+    padding: 3px;
+    font-size: 18px;
+    font-family: verdana, sans-serif;
+    background: rgb(148, 222, 148);
+    border-radius: 5px;
+    border: 1px rgb(17, 62, 21) solid;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.active {
+    background: rgba(83, 252, 83, 0.945);
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+#Backspace,
+#CapsLock,
+#Enter,
+#ShiftLeft {
+    width: 105px;
+}
+
+#Delete {
+    font-size: 14px;
+}
+
+#Space {
+    width: 380px;
+}
+
+#ArrowUp {
+    margin: 0 55px 0 0px;
+}
+
+#ArrowRight {
+    margin: 0 0px 0 0;
+}
+
+#ArrowLeft {
+    margin: 0 0px 0 10px;
+}
+
+#ArrowUp,
+#ArrowRight,
+#ArrowLeft,
+#ArrowDown {
+    border: 2px rgb(17, 62, 21) solid;
+}
