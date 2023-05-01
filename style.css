@@ -14,6 +14,14 @@ body {
     box-sizing: border-box;
 }
 
+.info {
+    font-size: 20px;
+    font-family: verdana, sans-serif;
+    color: rgb(17, 62, 21);
+    margin: auto;
+    width: 850px;
+}
+
 .keyboard {
     background-color: rgb(147, 158, 144);
     margin: 10px auto;
@@ -55,7 +63,7 @@ body {
 #CapsLock,
 #Enter,
 #ShiftLeft {
-    width: 100px;
+    width: 105px;
 }
 
 #Delete {

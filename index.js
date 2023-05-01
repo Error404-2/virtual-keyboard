@@ -4,9 +4,29 @@ const keyboard = document.createElement('div');
 textarea.className = 'textarea';
 textarea.rows = '7';
 textarea.cols = '50';
+textarea.autofocus = 'true';
 body.prepend(textarea);
 keyboard.className = 'keyboard';
 textarea.after(keyboard);
+const info = document.createElement('p');
+info.className = 'info';
+info.innerHTML = 'Клавиатура создана в операционной системе Windows.'
+keyboard.after(info);
+let language;
+let shiftPressed;
+if (!localStorage.langKeys) {
+  language = 'En'
+} else {
+  language = localStorage.langKeys;
+};
+const infoLangAct = document.createElement('p');
+infoLangAct.className = 'info';
+infoLangAct.innerHTML = `Текущий язык ввода: ${language}`;
+info.after(infoLangAct);
+const infoLang = document.createElement('p');
+infoLang.className = 'info';
+infoLang.innerHTML = 'Для переключения языка комбинация: левыe ctrl + alt'
+infoLangAct.after(infoLang);
 const keysObj = {
   AltLeft: {
     en: 'Alt', order: 56, ru: 'Alt', shiftEn: 'Alt', shiftRu: 'Alt',
@@ -203,7 +223,7 @@ const keysObj = {
 };
 
 class Key {
-  constructor(keyCode, en, order, ru, shiftEn, shiftRu) {
+  constructor(keyCode, en, order, ru, shiftEn, shiftRu, language) {
     this.id = keyCode;
     this.en = en;
     this.order = order;
@@ -214,13 +234,34 @@ class Key {
     this.div.id = this.id;
     this.div.className = 'button';
     this.div.style.order = this.order;
-    this.div.innerHTML = this.en;
     keyboard.append(this.div);
+    if ((language === 'En') && (!shiftPressed)) {
+      this.div.innerHTML = this.en;
+    } else if ((language === 'En') && (shiftPressed)) {
+      this.div.innerHTML = this.shiftEn;
+    } else if ((language === 'Ru') && (!shiftPressed)) {
+      this.div.innerHTML = this.ru;
+    } else if ((language === 'Ru') && (shiftPressed)) {
+      this.div.innerHTML = this.shiftRu;
+    }
   }
 
-  keydown() {
+  renderInnerButton(language) {
+    if ((language === 'En') && (!shiftPressed)) {
+      this.div.innerHTML = this.en;
+    } else if ((language === 'En') && (shiftPressed)) {
+      this.div.innerHTML = this.shiftEn;
+    } else if ((language === 'Ru') && (!shiftPressed)) {
+      this.div.innerHTML = this.ru;
+    } else if ((language === 'Ru') && (shiftPressed)) {
+      this.div.innerHTML = this.shiftRu;
+    }
+  };
+
+  keydown(language) {
     const keyPressed = document.getElementById(this.id);
     keyPressed.classList.add("active");
+    textarea.innerHTML += keyPressed.innerHTML;
   }
 
   keyup() {
@@ -230,12 +271,13 @@ class Key {
 
 }
 const classObj = {};
+
 Object.keys(keysObj).forEach((key) => {
   if (Object.hasOwn(keysObj, key)) {
     const {
       en, order, ru, shiftEn, shiftRu,
     } = keysObj[key];
-    classObj[key] = new Key(key, en, order, ru, shiftEn, shiftRu);
+    classObj[key] = new Key(key, en, order, ru, shiftEn, shiftRu, language);
   }
 });
 
@@ -246,3 +288,25 @@ addEventListener("keydown", (event) => {
 addEventListener("keyup", (event) => {
   classObj[event.code].keyup();
 });
+
+addEventListener("mousedown", (event) => {
+  if (event.target.id) { classObj[event.target.id].keydown(); }
+  console.log("mousedown работает, закройте из девтулс", event.target.id);
+});
+
+addEventListener("mouseup", (event) => {
+  if (event.target.id) { classObj[event.target.id].keyup(); }
+  console.log("mouseup работает, закройте из девтулс", event.target.id);
+});
+
+addEventListener("mouseout", (event) => {
+  if (event.target.id) { classObj[event.target.id].keyup(); }
+  console.log("mouseout работает, закройте из девтулс", event.target.id);
+});
+
+// //Event properties:
+
+// shiftKey: Shift
+// altKey: Alt (or Opt for Mac)
+// ctrlKey: Ctrl
+// metaKey: Cmd for Mac
