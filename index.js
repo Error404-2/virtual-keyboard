@@ -13,10 +13,10 @@ textarea.after(keyboard);
 let keysObj = {
     AltLeft: { en: 'Alt', order: 56, ru: 'Alt', shiftEn: 'Alt', shiftRu: 'Alt' },
     AltRight: { en: 'Alt', order: 58, ru: 'AltGraph', shiftEn: 'Alt', shiftRu: 'AltGraph' },
-    ArrowDown: { en: 'ArrowDown', order: 61, ru: 'ArrowDown', shiftEn: 'ArrowDown', shiftRu: 'ArrowDown' },
-    ArrowLeft: { en: 'ArrowLeft', order: 60, ru: 'ArrowLeft', shiftEn: 'ArrowLeft', shiftRu: 'ArrowLeft' },
-    ArrowRight: { en: 'ArrowRight', order: 62, ru: 'ArrowRight', shiftEn: 'ArrowRight', shiftRu: 'ArrowRight' },
-    ArrowUp: { en: 'ArrowUp', order: 53, ru: 'ArrowUp', shiftEn: 'ArrowUp', shiftRu: 'ArrowUp' },
+    ArrowDown: { en: '&#5121;', order: 61, ru: '&#5121;', shiftEn: '&#5121;', shiftRu: '&#5121;' },
+    ArrowLeft: { en: '&#5130;', order: 60, ru: '&#5130;', shiftEn: '&#5130;', shiftRu: '&#5130;' },
+    ArrowRight: { en: '&#5125;', order: 62, ru: '&#5125;', shiftEn: '&#5125;', shiftRu: '&#5125;' },
+    ArrowUp: { en: '&#5123;', order: 54, ru: '&#5123;', shiftEn: '&#5123;', shiftRu: '&#5123;' },
     Backquote: { en: '`', order: 0, ru: 'ё', shiftEn: '~', shiftRu: 'Ё' },
     Backslash: { en: '\\', order: 27, ru: '\\', shiftEn: '|', shiftRu: '/' },
     Backspace: { en: 'Backspace', order: 13, ru: 'Backspace', shiftEn: 'Backspace', shiftRu: 'Backspace' },
@@ -24,8 +24,8 @@ let keysObj = {
     BracketRight: { en: ']', order: 26, ru: 'ъ', shiftEn: '},,', shiftRu: 'Ъ' },
     CapsLock: { en: 'CapsLock', order: 30, ru: 'CapsLock', shiftEn: 'CapsLock', shiftRu: 'CapsLock' },
     Comma: { en: ',', order: 50, ru: 'б', shiftEn: '<', shiftRu: 'Б' },
-    ControlLeft: { en: 'Control', order: 55, ru: 'Control', shiftEn: 'Control', shiftRu: 'Control' },
-    ControlRight: { en: 'Control', order: 59, ru: 'Control', shiftEn: 'Control', shiftRu: 'Control' },
+    ControlLeft: { en: 'Ctrl', order: 55, ru: 'Ctrl', shiftEn: 'Ctrl', shiftRu: 'Ctrl' },
+    ControlRight: { en: 'Ctrl', order: 59, ru: 'Ctrl', shiftEn: 'Ctrl', shiftRu: 'Ctrl' },
     Delete: { en: 'Delete', order: 28, ru: 'Delete', shiftEn: 'Delete', shiftRu: 'Delete' },
     Digit0: { en: '0', order: 10, ru: '0', shiftEn: ')', shiftRu: ')' },
     Digit1: { en: '1', order: 1, ru: '1', shiftEn: '!', shiftRu: '!' },
@@ -70,10 +70,11 @@ let keysObj = {
     Quote: { en: "'", order: 40, ru: 'э', shiftEn: '"', shiftRu: 'Э' },
     Semicolon: { en: ';', order: 39, ru: 'ж', shiftEn: ':', shiftRu: 'Ж' },
     ShiftLeft: { en: 'Shift', order: 42, ru: 'Shift', shiftEn: 'Shift', shiftRu: 'Shift' },
-    ShiftRight: { en: 'Shift', order: 54, ru: 'Shift', shiftEn: 'Shift', shiftRu: 'Shift' },
+    ShiftRight: { en: 'Shift', order: 53, ru: 'Shift', shiftEn: 'Shift', shiftRu: 'Shift' },
     Slash: { en: '/', order: 52, ru: '.', shiftEn: '?', shiftRu: ',' },
     Space: { en: '', order: 57, ru: ' ', shiftEn: ' ', shiftRu: ' ' },
     Tab: { en: 'Tab', order: 14, ru: 'Tab', shiftEn: 'Tab', shiftRu: 'Tab' },
+    MetaLeft: { en: 'Win', order: 55, ru: 'Win', shiftEn: 'Win', shiftRu: 'Win' }
 };
 
 class Key {
